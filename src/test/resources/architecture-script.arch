@@ -1,0 +1,28 @@
+- type: external-person
+  name: Anonymous User
+  desc: Anybody on the web
+  uses:
+    - name: kickthetable.com
+    - name: Web Server
+
+- type: external-person
+  name: Administrator
+  desc: An authenticated user
+  uses:
+    - name: kickthetable.com
+    - name: Web Server
+
+- type: external-system
+  name: Kickstarter
+  desc: kickstarter.com
+
+- type: system
+  name: kickthetable.com
+  desc: The premier way to find kickstarter campaigns
+  containers:
+    - name: Web Server
+      desc: a web server
+      tech: ASP.net
+    - name: Cache
+      desc: Cache of campaigns
+      tech: Azure
