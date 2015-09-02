@@ -6,6 +6,13 @@
     - name: Web Server
 
 - type: external-person
+  name: Super User
+  desc: Anybody on the web
+  uses:
+    - name: Web Server
+
+
+- type: external-person
   name: Administrator
   desc: An authenticated user
   uses:

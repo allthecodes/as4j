@@ -1,0 +1,38 @@
+- type: system
+  name: techtribes.je
+  desc: techtribes.je is the only way to keep up with the IT, tech and digital sector in Jersey and Guernsey, Channel Islands
+  uses:
+    - name: Twitter
+    - name: Github
+    - name: Blogs
+    
+- type: external-person
+  name: Anonymous User
+  desc: Anybody on the web
+  uses:
+    - name: techtribes.je
+
+- type: external-person
+  name: Aggregated User
+  desc: A user or business with content that is aggregated into the websites
+  uses:
+    - name: techtribes.je
+    
+- type: external-person 
+  name: Administration User
+  desc: A system administration user.
+  uses:
+    - name: techtribes.je
+    
+- type: system 
+  name: Twitter
+  desc: twitter.com
+
+- type: system 
+  name: Github
+  desc: github.com
+
+- type: system 
+  name: Blogs
+  desc: RSS and Atom feeds
+

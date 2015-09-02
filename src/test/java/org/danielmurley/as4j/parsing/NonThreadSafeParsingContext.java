@@ -14,7 +14,6 @@ public class NonThreadSafeParsingContext {
 	public static void saveRelationshipForLater(Element parent, String name, String description)
 	{
 		LaterRelationship lr = new LaterRelationship(parent, name, description);
-		System.err.println("------> " + lr);
 		NonThreadSafeParsingContext.relationshipsToApplyLater.add(lr);
 	}
 	
@@ -30,7 +29,7 @@ public class NonThreadSafeParsingContext {
 			
 			System.err.println("Processing Add of " + lr);
 			Element e = ParsingTools.findRelatedEntityByType(lr.name, model);
-			ParsingTools.applyRelationship(lr.parent, e, lr.name);	
+			ParsingTools.applyRelationship(lr.parent, e, lr.name, lr.description);	
 		}
 		
 		for (LaterRelationship lr : relationshipsToApplyLater)

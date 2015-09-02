@@ -1,38 +1,22 @@
+
 - type: system
-  name: techtribes.je
-  desc: techtribes.je is the only way to keep up with the IT, tech and digital sector in Jersey and Guernsey, Channel Islands
-  uses:
-    - name: Twitter
-    - name: Github
-    - name: Blogs
-    
-- type: external-person
-  name: Anonymous User
-  desc: Anybody on the web
-  uses:
-    - name: techtribes.je
+  name: Acquisition Context Service
+  desc: Store contextual information for licences
 
-- type: external-person
-  name: Aggregated User
-  desc: A user or business with content that is aggregated into the websites
+- type: external-system
+  name: Salesforce
   uses:
-    - name: techtribes.je
-    
-- type: external-person 
-  name: Administration User
-  desc: A system administration user.
+    - name: Acquisition Context Service
+    - desc: Create contextual information for a licence
+
+- type: system
+  name: Barrier Service
   uses:
-    - name: techtribes.je
-    
-- type: system 
-  name: Twitter
-  desc: twitter.com
+    - name: Acquisition Context Service
+    - desc: Get contextual information about barrier
 
-- type: system 
-  name: Github
-  desc: github.com
-
-- type: system 
-  name: Blogs
-  desc: RSS and Atom feeds
-
+- type: system
+  name: Corporate Signup Form
+  uses:
+    - name: Acquisition Context Service
+    - desc: Get contextual information 

@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Test;
@@ -15,10 +16,14 @@ import org.yaml.snakeyaml.Yaml;
 
 import com.mxgraph.canvas.mxICanvas;
 import com.mxgraph.canvas.mxSvgCanvas;
+import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.layout.mxStackLayout;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxGraphModel;
+import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxDomUtils;
@@ -40,7 +45,7 @@ public class TestParser {
 	{
 		Yaml yaml = new Yaml();
 		try {
-			InputStream is = Files.newInputStream(Paths.get(TestParser.class.getResource("/architecture-script2.arch").toURI()));
+			InputStream is = Files.newInputStream(Paths.get(TestParser.class.getResource("/architecture-script3.arch").toURI()));
 			Object o = yaml.load(is);
 			Model m = new Model();
 
@@ -56,7 +61,17 @@ public class TestParser {
 			graph.setHtmlLabels(true);
 			Object parent = graph.getDefaultParent();
 
+			
+			graph.setHtmlLabels(true);
+			
 			graph.getModel().beginUpdate();
+			
+			mxCell vx = (mxCell) graph.insertVertex(parent, "999","daniel is great", 100, 100, 100, 100, "verticalLabelPosition=top;verticalAlign=bottom;opacity=50");
+			
+			
+			
+			parent = vx;
+			
 			try {
 			
 				Set<Element> elements = m.getElements();
@@ -65,7 +80,14 @@ public class TestParser {
 				
 				for (Element e : elements)
 				{
-					mxCell vx = (mxCell) graph.insertVertex(parent, e.getId(),e.getName(), 100, 100, 150, 100);
+					String style = StyleAdapter.getStyle(e);
+					
+					vx = (mxCell) graph.insertVertex(parent, e.getId(),e.getName(), 100, 100, StyleAdapter.getWidth(e), StyleAdapter.getHeight(e), style);
+					if (e.getName().equals("<<ft system>>"))
+					{
+						vx.setParent((mxICell) graph.getDefaultParent()); 
+					}
+					
 					System.err.println("inserted " + e + " at " + e.getId());
 					
 					links.put(e.getId(), vx);
@@ -79,7 +101,8 @@ public class TestParser {
 					
 					Object src = links.get(r.getSourceId());
 					Object dest = links.get(r.getDestinationId());
-					Object rx = graph.insertEdge(parent, r.getId(), "im a desc", src, dest, "dashed=true");
+			
+					Object rx = graph.insertEdge(parent, r.getId(), Optional.of(r.getDescription()).orElse("hello"), src, dest, "dashed=true");
 				}
 				
 //				Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80, 30);
@@ -105,9 +128,12 @@ public class TestParser {
 //				graph.insertEdge(parent, null, "Edge", v8, v2);
 //				
 				
+				//mxOrganicLayout layout = new mxOrganicLayout(graph);
+				//mxCircleLayout layout = new mxCircleLayout(graph);
 				mxHierarchicalLayout layout = new mxHierarchicalLayout(graph);
-				layout.setInterRankCellSpacing(150);
+				layout.setInterRankCellSpacing(100);
 				layout.setIntraCellSpacing(200);
+				layout.setParentBorder(20);
 				
 				//mxStackLayout layout = new mxStackLayout(graph);
 				

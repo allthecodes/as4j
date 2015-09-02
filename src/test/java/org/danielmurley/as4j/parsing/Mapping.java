@@ -19,7 +19,7 @@ public abstract class Mapping {
 		{
 			Map<String, ?> m = (Map<String, ?>) uses.get(i);
 			Element e = ParsingTools.findRelatedEntityByType(String.valueOf(m.get("name")), model);
-			ParsingTools.applyRelationship(parent, e, Fields.get(m, Fields.NAME));
+			ParsingTools.applyRelationship(parent, e, Fields.get(m, Fields.NAME), Fields.get(m, Fields.DESCRIPTION));
 			
 		}
 		
